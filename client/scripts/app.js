@@ -30,15 +30,17 @@ var app = {
     _.each( msgs, function (message) {
       var user = "";
       var msgtxt = "";
-        if ( message.username ) {
-        user = app.clean(message.username);
+        if ( app.validate(message.username) ) {
+        user = message.username;
         }
-        if ( message.text ) {
-          msgtxt = app.clean(message.text);
+        if ( app.validate(message.text) ) {
+          msgtxt = message.text;
         }
       var msg = $('<li><span class="createdBy">'+user+'</span>: '+msgtxt+'</li>');
-      $('.messages').append(msg);
-      console.log(msg);
+      if (user !== "" && msg.text !== "") {
+        $('.messages').append(msg);
+      };
+      console.log(message);
     })
 
   },
@@ -62,10 +64,12 @@ var app = {
     });
   },
 
-  clean: function( string ) {
-    var cleanString = string.replace(/[|&;$%@"<>()+,]/g, "");
-    return cleanString;
+  validate: function( string ) {
+    if ( string.match(/[|&;$%@"<>()+,]/g, "") || string === "" ) {
+    return false;
   }
+  return true;
+}
 
 };
 
