@@ -6,6 +6,8 @@ var app = {
 
   messages: [],
 
+  newMessages: [],
+
   send: function(message) {
     var app = this;
     $.ajax({
@@ -26,8 +28,16 @@ var app = {
 
   updateMessages: function ( ) {
     var app = this;
-    var msgs = this.messages;
-    _.each( msgs, function (message) {
+
+    if ( this.messages.length === 0 ) {
+      this.messages = this.newMessages;
+      var newMsgs = this.messages;
+    } else if ( this.newMessages.length > this.messages.length ) {
+      var diff = this.newMessages.length - this.messages.length;
+      var newMsgs = this.newMessages.slice(diff);
+    }
+
+    _.each( newMsgs, function (message) {
       var user = "";
       var msgtxt = "";
         if ( app.validate(message.username) ) {
@@ -41,8 +51,9 @@ var app = {
         $('.messages').append(msg);
       };
       console.log(message);
-    })
-
+      app.messages.push(message);
+    });
+    this.newMessages = [];
   },
 
   fetch: function( ) {
@@ -53,7 +64,7 @@ var app = {
       type: 'GET',
       contentType: 'application/json',
       success: function (data) {
-        app.messages = data.results;
+        app.newMessages = data.results;
         app.updateMessages( );
         console.log('chatterbox: Messages fetched');
       },
@@ -65,12 +76,18 @@ var app = {
   },
 
   validate: function( string ) {
-    if ( string.match(/[|&;$%@"<>()+,]/g, "") || string === "" ) {
+    if ( string === undefined ) {
+      return false;
+    }
+    if ( string.match(/[|&;$%@"<>()+,]/g, "") || string === "") {
     return false;
-  }
+    }
   return true;
-}
+  },
+
+
+
 
 };
 
-app.fetch();
+setInterval (app.fetch.bind(app), 1000);
