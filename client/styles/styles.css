@@ -6,7 +6,9 @@ body {
 }
 
 #main {
-    width: 500px;
+    width: 600px;
+    height: 800px;
+    overflow: auto;
     margin: auto;
     text-align: left;
     background: white;
