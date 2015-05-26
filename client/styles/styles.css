@@ -4,6 +4,12 @@ body {
     padding: 0 25px;
     font-family: 'Lato', sans-serif;
 }
+.container {
+    width: 80%;
+    display: inline-block;
+    margin: 0 auto;
+    padding: 10px;
+}
 a.username {
     text-decoration: none;
     color: blue;
@@ -23,10 +29,15 @@ a.username:visited {
     float: right;
 }
 #friendsList {
-    width: 100px;
+    width: 200px;
     background-color: darkgrey;
     float: left;
+    margin: 0 auto;
 }
+#rooms {
+    margin: 0 auto;
+}
+
 #rooms input{
     width: 100px;
 }
@@ -76,9 +87,13 @@ a.username:visited {
     line-height: 13px;
 }
 
+label {
+    text-align: center;
+}
+
 form {
-    padding: 20px;
-    padding-left: 0;
+ /*   padding: 20px;
+    padding-left: 0;*/
     margin-bottom: 20px;
 }
 

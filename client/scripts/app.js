@@ -43,7 +43,7 @@ var app = {
       // if we have a valid user and text string
       if ( user !== "" && text !== "") {
         var chatMessage;
-        if ( app.friends.indexOf(user) > 0 ) {
+        if ( app.friends.indexOf(user) !== -1 ) {
           chatMessage = $('<p class="message friendMessage">' + '<a href="#" class="username">' + user  + '</a>' + ':' +  '<br>' + text +'</p>');
         } else {
           chatMessage = $('<p class="message">' + '<a href="#" class="username">' + user  + '</a>' + ':' +  '<br>' + text +'</p>');
@@ -64,6 +64,7 @@ var app = {
       var friend = $(this).text();
       if ( app.friends.indexOf(friend) === -1 ) {
         app.friends.push(friend);
+        console.log(app.friends);
         var thisFriend = $('<p class="friend">' + friend + '</p>');
         $('#friendsList').append(thisFriend);
       }
