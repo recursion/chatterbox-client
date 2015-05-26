@@ -4,7 +4,13 @@ body {
     padding: 0 25px;
     font-family: 'Lato', sans-serif;
 }
-
+a.username {
+    text-decoration: none;
+    color: blue;
+}
+a.username:visited {
+    color: blue;
+}
 #rooms {
     background-color: darkgrey;
     width: 150px;
