@@ -28,9 +28,10 @@ var app = {
     _.each (messages, function (message) {
       var user = app.validate(message.username);
       var text = app.validate(message.text);
-      var roomName = app.validate(message.roomname);
-      if ( user !== "" && text !== "" ) {
-        var chatMessage = $('<p class = "message">' + user + ':' + text + '</p>');
+      var room = app.validate(message.roomname);
+      var roomName = $('#inputRoom').val();
+      if ( user !== "" && text !== "" && room === roomName) {
+        var chatMessage = $('<p class = "message">' + user + ':' + text +'</p>');
         $('#main').append(chatMessage);
       }
     })
@@ -55,7 +56,7 @@ var app = {
   },
 
   validate: function( string ) {
-    if ( string === undefined ) {
+    if ( string === undefined  || string === null) {
       return "";
     }
     if ( string.match(/[|&;$%@"<>()+,]/g, "") || string === "") {
@@ -73,8 +74,11 @@ var app = {
     postThis.username = username;
     postThis.text = message;
     postThis.roomname = roomname;
-    console.log("this is your message");
     app.send(postThis);
+  },
+
+  addRoom: function ( roomname ) {
+
   }
 
 };
@@ -83,13 +87,9 @@ $(document).ready(function () {
 
   $('#submitButton').on("click",  function (event) {
     event.preventDefault();
-    console.log("i work");
     var username = $('#inputName').val();
     var message = $('#inputMessage').val();
-    var roomname = $('#inputroomname').val();
-    console.log(username);
-    console.log(message);
-    console.log(roomname);
+    var roomname = $('#inputRoomName').val();
     app.addMessage(username, message, roomname);
   });
 

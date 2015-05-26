@@ -14,27 +14,26 @@
   </head>
   <body>
     <h1>chatterbox</h1>
-    <form>
-    user name:<br>
-    <input type="text" name="username" id = "inputName">
+      <form id="chatControls">
+      user name:<br>
+      <input type="text" name="username" id = "inputName">
+      <br>
+      message:<br>
+      <input type="text" name="message" id = "inputMessage">
+      <br>
+      room name: <br>
+      <input type="text" name="roomname" id = "inputRoomName">
+      <br>
+      <input type="submit" value="submit" id = "submitButton">
+      </form>
+      <form id="roomControls">
+      Current Room: <br>
+      <input type="text" name="chatroom" id = "inputRoom">
+      <br>
+      </form>
+    <div class = "rooms"> </div>
     <br>
-    message:<br>
-    <input type="text" name="message" id = "inputMessage">
-    <br>
-    room name: <br>
-    <input type="text" name="roomname" id = "inputroomname">
-    <br>
-    <input type="submit" value="submit" id = "submitButton">
-    </form>
-    <form>
-    Add Room:<br>
-    <input type="text" name="chatroom" id = "inputRoom">
-    <br>
-    <input type="submit" value="submit" id = "submitButtonRoom">
-    <br>
-    </form>
     <div id="main">
-      <!-- Your HTML goes here! -->
     </div>
   </body>
 </html>
