@@ -4,10 +4,6 @@ var app = {
 
   server: 'https://api.parse.com/1/classes/chatterbox',
 
-  messages: [],
-
-  newMessages: [],
-
   send: function(message) {
     var app = this;
     $.ajax({
@@ -26,38 +22,18 @@ var app = {
     });
   },
 
-  updateMessages: function ( ) {
+  updateMessages: function ( messages ) {
     var app = this;
-
-    if ( this.messages.length === 0 ) {
-      this.messages = this.newMessages;
-      var newMsgs = this.messages;
-    } else if ( this.newMessages.length > this.messages.length ) {
-      var diff = this.newMessages.length - this.messages.length;
-      var newMsgs = this.newMessages.slice(diff);
-    } else {
-      //console.log('No new Messages');
-      var newMsgs = []
-    }
-
-    //console.log('adding: ', newMsgs.length, ' new messages.');
-    _.each( newMsgs, function (message) {
-      var user = "";
-      var msgtxt = "";
-        if ( app.validate(message.username) ) {
-        user = message.username;
-        }
-        if ( app.validate(message.text) ) {
-          msgtxt = message.text;
-        }
-      var msg = $('<p class = "message"><span class="createdBy">'+user+'</span>: '+msgtxt+'</p>');
-      if (user !== "" && msg.text !== "") {
-        $('#main').prepend(msg);
-      };
-      app.messages.push(message);
-      $('#main').scrollTop = $('#main').scrollheight;
-    });
-    this.newMessages = [];
+    $('.message').remove();
+    _.each (messages, function (message) {
+      var user = app.validate(message.username);
+      var text = app.validate(message.text);
+      var roomName = app.validate(message.roomname);
+      if ( user !== "" && text !== "" ) {
+        var chatMessage = $('<p class = "message">' + user + ':' + text + '</p>');
+        $('#main').append(chatMessage);
+      }
+    })
   },
 
   fetch: function( ) {
@@ -68,8 +44,7 @@ var app = {
       type: 'GET',
       contentType: 'application/json',
       success: function (data) {
-        app.newMessages = data.results;
-        app.updateMessages( );
+        app.updateMessages( data.results);
         //console.log('chatterbox: Messages fetched');
       },
       error: function (data) {
@@ -81,12 +56,12 @@ var app = {
 
   validate: function( string ) {
     if ( string === undefined ) {
-      return false;
+      return "";
     }
     if ( string.match(/[|&;$%@"<>()+,]/g, "") || string === "") {
-    return false;
+    return "";
     }
-  return true;
+  return string;
   },
 
   clearMessages: function () {
@@ -94,15 +69,13 @@ var app = {
   },
 
   addMessage: function (username, message, roomname) {
-    var message = {};
-    message.username = username;
-    message.text = message;
-    message.roomname = roomname;
+    var postThis = {};
+    postThis.username = username;
+    postThis.text = message;
+    postThis.roomname = roomname;
     console.log("this is your message");
-    console.log(message);
-    app.send(message);
+    app.send(postThis);
   }
-
 
 };
 
@@ -111,9 +84,12 @@ $(document).ready(function () {
   $('#submitButton').on("click",  function (event) {
     event.preventDefault();
     console.log("i work");
-    var username = $('#inputUser').val();
+    var username = $('#inputName').val();
     var message = $('#inputMessage').val();
     var roomname = $('#inputroomname').val();
+    console.log(username);
+    console.log(message);
+    console.log(roomname);
     app.addMessage(username, message, roomname);
   });
 
