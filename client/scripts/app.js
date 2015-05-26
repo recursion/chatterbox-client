@@ -95,22 +95,21 @@ $(document).ready(function () {
     app.addMessage(username, message, roomname);
   });
 
-$('#submitButtonRoom').on("click",  function (event) {
-  event.preventDefault();
-  var addNewRoom = $('#inputRoom').val();
-  console.log(app.rooms);
-    if ( app.rooms.indexOf(addNewRoom) === -1 ) {
-      app.rooms.push(addNewRoom);
-      var newRoom = $('<p class = "room">' + addNewRoom + '</p>');
-      $('.rooms').append(newRoom);
-    } else {
-      alert('Room already exists!');
-    }
-  });
-
-$('.room').on("click",  function (event) {
-  event.preventDefault();
-  console.log(this);
+  $('#submitButtonRoom').on("click",  function (event) {
+    event.preventDefault();
+    var addNewRoom = $('#inputRoom').val();
+    console.log(app.rooms);
+      if ( app.rooms.indexOf(addNewRoom) === -1 ) {
+        app.rooms.push(addNewRoom);
+        var newRoom = $('<p class="room">' + addNewRoom + '</p>');
+        $('#rooms').append(newRoom);
+        $('.room').on("click",  function (event) {
+          event.preventDefault();
+          var filter = $(this).text();
+        });
+      } else {
+        alert('Room already exists!');
+      }
   });
 
 });

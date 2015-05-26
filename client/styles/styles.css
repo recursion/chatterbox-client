@@ -5,6 +5,16 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
+#rooms {
+    background-color: darkgrey;
+    width: 250px;
+    padding: 10px;
+    display: block;
+    float: right;
+}
+#rooms input{
+    width: 100px;
+}
 #main {
     width: 600px;
     height: 700px;
