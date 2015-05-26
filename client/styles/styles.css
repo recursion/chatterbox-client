@@ -7,13 +7,16 @@ body {
 
 #rooms {
     background-color: darkgrey;
-    width: 250px;
+    width: 150px;
     padding: 10px;
     display: block;
     float: right;
 }
 #rooms input{
     width: 100px;
+}
+.selectedRoom {
+    background-color: red;
 }
 #main {
     width: 600px;

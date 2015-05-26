@@ -39,25 +39,18 @@ var app = {
         selectedRoom = selectedRoom.innerHTML;
       }
 
-      // send message to this room
-      var sendMessageToRoom = $('#inputRoom').val();
-
       // if we have a valid user and text string
       if ( user !== "" && text !== "") {
-
-        // if a room is selected.
-        if (selectedRoom !== undefined) {
+        if (selectedRoom === "Lobby") {
+          var chatMessage = $('<p class = "message">' + '<span class = "username">' + user  + '</span>' + ':' +  '<br>' + text +'</p>');
+          $('#main').append(chatMessage);
+        } else if (selectedRoom !== undefined) {
 
           // if the current message is to the selected room
           if (room === selectedRoom) {
             var chatMessage = $('<p class = "message">' + '<span class = "username">' + user  + '</span>' + ':' +  '<br>' + text +'</p>');
             $('#main').append(chatMessage);
           }
-
-        // otherwise append
-        } else {
-          var chatMessage = $('<p class = "message">' + '<span class = "username">' + user  + '</span>' + ':' +  '<br>' + text +'</p>');
-          $('#main').append(chatMessage);
         }
       }
     })
@@ -150,6 +143,12 @@ $(document).ready(function () {
     app.addRoom(addNewRoom);
   });
 
+  $('.room').on("click",  function (event) {
+    event.preventDefault();
+    $('.room').removeClass('selectedRoom');
+    $(this).addClass('selectedRoom');
+    var filter = $(this).text();
+  });
 });
 
 setInterval (app.fetch.bind(app), 1000);
