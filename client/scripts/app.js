@@ -4,6 +4,8 @@ var app = {
 
   server: 'https://api.parse.com/1/classes/chatterbox',
 
+  rooms : [],
+
   send: function(message) {
     var app = this;
     $.ajax({
@@ -31,7 +33,7 @@ var app = {
       var room = app.validate(message.roomname);
       var roomName = $('#inputRoom').val();
       if ( user !== "" && text !== "" && room === roomName) {
-        var chatMessage = $('<p class = "message">' + user + ':' + text +'</p>');
+        var chatMessage = $('<p class = "message">' + '<span class = "username">' + user  + '</span>' + ':' +  '<br>' + text +'</p>');
         $('#main').append(chatMessage);
       }
     })
@@ -91,6 +93,24 @@ $(document).ready(function () {
     var message = $('#inputMessage').val();
     var roomname = $('#inputRoomName').val();
     app.addMessage(username, message, roomname);
+  });
+
+$('#submitButtonRoom').on("click",  function (event) {
+  event.preventDefault();
+  var addNewRoom = $('#inputRoom').val();
+  console.log(app.rooms);
+    if ( app.rooms.indexOf(addNewRoom) === -1 ) {
+      app.rooms.push(addNewRoom);
+      var newRoom = $('<p class = "room">' + addNewRoom + '</p>');
+      $('.rooms').append(newRoom);
+    } else {
+      alert('Room already exists!');
+    }
+  });
+
+$('.room').on("click",  function (event) {
+  event.preventDefault();
+  console.log(this);
   });
 
 });
