@@ -28,13 +28,37 @@ var app = {
     var app = this;
     $('.message').remove();
     _.each (messages, function (message) {
+      // this message
       var user = app.validate(message.username);
       var text = app.validate(message.text);
       var room = app.validate(message.roomname);
-      var roomName = $('#inputRoom').val();
-      if ( user !== "" && text !== "" && room === roomName) {
-        var chatMessage = $('<p class = "message">' + '<span class = "username">' + user  + '</span>' + ':' +  '<br>' + text +'</p>');
-        $('#main').append(chatMessage);
+
+      // selected room
+      var selectedRoom = $('.selectedRoom')[0];
+      if (selectedRoom !== undefined) {
+        selectedRoom = selectedRoom.innerHTML;
+      }
+
+      // send message to this room
+      var sendMessageToRoom = $('#inputRoom').val();
+
+      // if we have a valid user and text string
+      if ( user !== "" && text !== "") {
+
+        // if a room is selected.
+        if (selectedRoom !== undefined) {
+
+          // if the current message is to the selected room
+          if (room === selectedRoom) {
+            var chatMessage = $('<p class = "message">' + '<span class = "username">' + user  + '</span>' + ':' +  '<br>' + text +'</p>');
+            $('#main').append(chatMessage);
+          }
+
+        // otherwise append
+        } else {
+          var chatMessage = $('<p class = "message">' + '<span class = "username">' + user  + '</span>' + ':' +  '<br>' + text +'</p>');
+          $('#main').append(chatMessage);
+        }
       }
     })
   },
@@ -80,7 +104,20 @@ var app = {
   },
 
   addRoom: function ( roomname ) {
-
+    var addNewRoom = roomname;
+      if ( app.rooms.indexOf(addNewRoom) === -1 ) {
+        app.rooms.push(addNewRoom);
+        var newRoom = $('<p class="room">' + addNewRoom + '</p>');
+        $('#rooms').append(newRoom);
+        $('.room').on("click",  function (event) {
+          event.preventDefault();
+          $('.room').removeClass('selectedRoom');
+          $(this).addClass('selectedRoom');
+          var filter = $(this).text();
+        });
+      } else {
+        alert('Room already exists!');
+      }
   },
 
   getQueryVariable: function(variable) {
@@ -110,18 +147,7 @@ $(document).ready(function () {
   $('#submitButtonRoom').on("click",  function (event) {
     event.preventDefault();
     var addNewRoom = $('#inputRoom').val();
-    console.log(app.rooms);
-      if ( app.rooms.indexOf(addNewRoom) === -1 ) {
-        app.rooms.push(addNewRoom);
-        var newRoom = $('<p class="room">' + addNewRoom + '</p>');
-        $('#rooms').append(newRoom);
-        $('.room').on("click",  function (event) {
-          event.preventDefault();
-          var filter = $(this).text();
-        });
-      } else {
-        alert('Room already exists!');
-      }
+    app.addRoom(addNewRoom);
   });
 
 });
