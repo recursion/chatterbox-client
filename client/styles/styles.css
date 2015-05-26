@@ -11,12 +11,21 @@ a.username {
 a.username:visited {
     color: blue;
 }
+.friendMessage {
+    background-color: orange;
+    font-weight: 900;
+}
 #rooms {
     background-color: darkgrey;
     width: 150px;
     padding: 10px;
     display: block;
     float: right;
+}
+#friendsList {
+    width: 100px;
+    background-color: darkgrey;
+    float: left;
 }
 #rooms input{
     width: 100px;

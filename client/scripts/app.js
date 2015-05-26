@@ -5,6 +5,7 @@ var app = {
   server: 'https://api.parse.com/1/classes/chatterbox',
 
   rooms : [],
+  friends: [],
 
   send: function(message) {
     var app = this;
@@ -41,19 +42,32 @@ var app = {
 
       // if we have a valid user and text string
       if ( user !== "" && text !== "") {
+        var chatMessage;
+        if ( app.friends.indexOf(user) > 0 ) {
+          chatMessage = $('<p class="message friendMessage">' + '<a href="#" class="username">' + user  + '</a>' + ':' +  '<br>' + text +'</p>');
+        } else {
+          chatMessage = $('<p class="message">' + '<a href="#" class="username">' + user  + '</a>' + ':' +  '<br>' + text +'</p>');
+        }
         if (selectedRoom === "Lobby") {
-          var chatMessage = $('<p class = "message">' + '<span class = "username">' + user  + '</span>' + ':' +  '<br>' + text +'</p>');
           $('#main').append(chatMessage);
         } else if (selectedRoom !== undefined) {
 
           // if the current message is to the selected room
           if (room === selectedRoom) {
-            var chatMessage = $('<p class = "message">' + '<span class = "username">' + user  + '</span>' + ':' +  '<br>' + text +'</p>');
             $('#main').append(chatMessage);
           }
         }
       }
-    })
+    });
+    $('.username').on("click",  function (event) {
+      event.preventDefault();
+      var friend = $(this).text();
+      if ( app.friends.indexOf(friend) === -1 ) {
+        app.friends.push(friend);
+        var thisFriend = $('<p class="friend">' + friend + '</p>');
+        $('#friendsList').append(thisFriend);
+      }
+    });
   },
 
   fetch: function( ) {
