@@ -14,15 +14,21 @@
   </head>
   <body>
     <h1>chatterbox</h1>
-      <form id="chatControls">
-        <label for"username">Username</label>
-        <input type="text" name="username" id="inputName">
-        <label for"message">Message</label>
-        <input type="text" name="message" id="inputMessage">
-        <label for"roomname">Room</label>
-        <input type="text" name="roomname" id="inputRoomName">
-        <input type="submit" value="submit" id="submitButton">
-      </form>
+    <div id="container">
+      <div id="friendsList">
+        <h4>Friends List</h4>
+      </div>
+      <div id="chatBox">
+        <form id="chatControls">
+          <label for"username">Username</label>
+          <input type="text" name="username" id="inputName">
+          <label for"message">Message</label>
+          <input type="text" name="message" id="inputMessage">
+          <label for"roomname">Room</label>
+          <input type="text" name="roomname" id="inputRoomName">
+          <input type="submit" value="submit" id="submitButton">
+        </form>
+      </div>
       <div id="rooms">
         <form id="roomControls">
           <label for"chatRoom">Add Chat Room</label>
@@ -31,6 +37,7 @@
         </form>
         <p class="room selectedRoom">Lobby</p>
       </div>
-    <div id="main"></div>
+      <div id="main"></div>
+    </div>
   </body>
 </html>
